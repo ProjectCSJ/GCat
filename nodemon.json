@@ -1,9 +1,0 @@
-{
-    "verbose": true,
-    "ignore": [
-        "deploy-commands.js",
-        "events/*",
-        "*.json"
-    ],
-    "delay": 5000
-}
