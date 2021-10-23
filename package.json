@@ -4,7 +4,9 @@
   "description": "G Cat in Discord.js",
   "main": "bot.js",
   "scripts": {
-    "test": "node deploy-commands.js && nodemon bot.js"
+    "bot": "node bot.js",
+    "command": "node deploy-commands.js",
+    "full": "node deploy-commands.js && node bot.js"
   },
   "keywords": [
     "G Cat",

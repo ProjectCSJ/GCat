@@ -23,7 +23,9 @@ module.exports = {
 		logger.info(`正在連線到${DB_HOST}...`);
 
 		DB.connect((err) => {
-			if (err) {throw err;}
+			if (err) {
+				logger.error(err);
+			}
 			logger.info(`已成功連線至${DB_HOST}!`);
 			logger.info(`正在結束${DB_HOST}連線...`);
 			DB.end();
