@@ -3,7 +3,8 @@
     "ignore": [
         "deploy-commands.js",
         "events/*",
-        "*.json"
+        "*.json",
+        "*.env"
     ],
     "delay": 5000
 }

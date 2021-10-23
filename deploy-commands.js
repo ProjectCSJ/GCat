@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-tabs */
-
+const logger = require('node-color-log');
 // Setting Configutation
 const dotenv = require('dotenv');
 dotenv.config();
@@ -32,7 +32,7 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 			{ body: commands },
 		);
 
-		console.log('Successfully reloaded application (/) commands.');
+		logger.info('Successfully reloaded application (/) commands.');
 	}
 	catch (error) {
 		console.error(error);
