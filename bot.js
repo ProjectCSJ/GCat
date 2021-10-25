@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-tabs */
 const logger = require('node-color-log');
+logger.setLevel('info');
 // Setting Configuration
 const dotenv = require('dotenv');
 dotenv.config();
@@ -18,7 +19,9 @@ for (const folder of commandFolders) {
 	const commandFiles = fs.readdirSync(`./commands/${folder}`).filter((file) => file.endsWith('.js'));
 	for (const file of commandFiles) {
 		const command = require(`./commands/${folder}/${file}`);
+		logger.info(`⏳ Loading command ${folder}/${command.data.name}...`);
 		client.commands.set(command.data.name, command);
+		logger.info(`✔️ Command ${folder}/${command.data.name} has been load!`);
 	}
 }
 
@@ -46,7 +49,7 @@ client.on('interactionCreate', async (interaction) => {
 	}
 	catch (error) {
 		logger.warn(error);
-		await interaction.reply({ content: '觸發失敗!', ephemeral: true });
+		await interaction.reply({ content: `**${interaction.commandName}**觸發失敗!`, ephemeral: true });
 	}
 });
 
