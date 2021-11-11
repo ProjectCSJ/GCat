@@ -36,6 +36,6 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 		logger.debug('Successfully reloaded application (/) commands.');
 	}
 	catch (error) {
-		console.error(error);
+		logger.error(error);
 	}
 })();
