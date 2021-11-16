@@ -2,6 +2,7 @@
 /* eslint-disable no-tabs */
 const logger = require('node-color-log');
 logger.setLevel('info');
+logger.setDate(() => (new Date()).toLocaleString());
 // Setting Configuration
 const dotenv = require('dotenv');
 dotenv.config();
