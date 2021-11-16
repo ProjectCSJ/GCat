@@ -28,12 +28,10 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 (async () => {
 	try {
 		logger.debug('Started refreshing application (/) commands.');
-
 		await rest.put(
 			Routes.applicationCommands(process.env.ClientId),
 			{ body: commands },
 		);
-
 		logger.debug('Successfully reloaded application (/) commands.');
 	}
 	catch (error) {

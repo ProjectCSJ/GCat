@@ -16,15 +16,20 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Collection();
 
 const commandFolders = fs.readdirSync('./commands');
-for (const folder of commandFolders) {
-	const commandFiles = fs.readdirSync(`./commands/${folder}`).filter((file) => file.endsWith('.js'));
-	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
-		logger.info(`⏳ Loading command ${folder}/${command.data.name}...`);
+logger.info('⏳ Initialize modules...');
+for (const module of commandFolders) {
+	logger.info(`✔️ Module ${module} has been load!`);
+	logger.info(`⏳ Loading commands in ${module}`);
+	const commandFiles = fs.readdirSync(`./commands/${module}`).filter((file) => file.endsWith('.js'));
+	for (const commandName of commandFiles) {
+		const command = require(`./commands/${module}/${commandName}`);
+		logger.info(`⏳ Loading command ${module}/${command.data.name}...`);
 		client.commands.set(command.data.name, command);
-		logger.info(`✔️ Command ${folder}/${command.data.name} has been load!`);
+		logger.info(`✔️ Command ${module}/${command.data.name} has been load!`);
 	}
 }
+logger.info('✔️ All of modules initialize complete!');
+logger.debug('🏳️ Language set Chinese');
 
 const eventFiles = fs.readdirSync('./events').filter((file) => file.endsWith('.js'));
 
