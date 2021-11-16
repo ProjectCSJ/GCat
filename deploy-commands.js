@@ -1,34 +1,39 @@
 /* eslint-disable max-len */
 /* eslint-disable no-tabs */
+/* eslint-disable no-inline-comments */
+
+// Logger Settings
 const logger = require('node-color-log');
 logger.setLevel('info');
 logger.setDate(() => (new Date()).toLocaleString());
+
 // Setting Configutation
 const dotenv = require('dotenv');
 dotenv.config();
-const fs = require('fs');
 
 // Module Import
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+const fs = require('fs'); // file reader
+const { REST } = require('@discordjs/rest'); // discord api
+const { Routes } = require('discord-api-types/v9'); // discord api
 
-const commands = [];
+const commands = []; // initialize empty container
 
-const commandFolders = fs.readdirSync('./commands');
-for (const folder of commandFolders) {
-	const commandFiles = fs.readdirSync(`./commands/${folder}`).filter((file) => file.endsWith('.js'));
-	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
-		commands.push(command.data.toJSON());
+// Read files
+const commandFolders = fs.readdirSync('./commands'); // read all commands folders
+for (const folder of commandFolders) { // read category folders
+	const commandFiles = fs.readdirSync(`./commands/${folder}`).filter((file) => file.endsWith('.js')); // definition what is command file
+	for (const file of commandFiles) { // read command files
+		const command = require(`./commands/${folder}/${file}`); // call up command files
+		commands.push(command.data.toJSON()); // put command information to container
 	}
 }
 
-const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
-
+// Deploy
+const rest = new REST({ version: '9' }).setToken(process.env.TOKEN); // call up api
 (async () => {
 	try {
 		logger.debug('Started refreshing application (/) commands.');
-		await rest.put(
+		await rest.put( // registration
 			Routes.applicationCommands(process.env.ClientId),
 			{ body: commands },
 		);

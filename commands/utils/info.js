@@ -1,10 +1,13 @@
+/* eslint-disable no-inline-comments */
 /* eslint-disable max-len */
 /* eslint-disable no-tabs */
 
+// Call up api
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
+	// define commands
 	data: new SlashCommandBuilder()
 		.setName('info')
 		.setDescription('Get infomation')
@@ -19,9 +22,11 @@ module.exports = {
 			subcommand
 				.setName('server')
 				.setDescription('Info about the server')),
+	defaultPermission: true, // defaule permission
 	async execute(interaction) {
-		if (interaction.options.getSubcommand() === 'user') {
-			const user = interaction.options.getUser('target');
+		if (interaction.options.getSubcommand() === 'user') { // when sub command is user
+			const user = interaction.options.getUser('target'); // setup target
+			// embed builder
 			const userinfo = new MessageEmbed()
 				.setColor('RANDOM')
 				.setTitle(`這是${user.username}的詳細資訊`)
@@ -51,11 +56,12 @@ module.exports = {
 					},
 				)
 				.setFooter('Copyright © Project CSJ', 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png');
-			interaction.reply({ embeds: [userinfo], ephemeral: true });
+			interaction.reply({ embeds: [userinfo], ephemeral: true }); // send feedback
 		}
-		else {
-			const guild = interaction.guild;
-			const afk = guild.afkTimeout / 60;
+		else { // when sub command is guild
+			const guild = interaction.guild; // setup target
+			const afk = guild.afkTimeout / 60; // formate afk time
+			// embed builder
 			const guildinfo = new MessageEmbed()
 				.setColor('RANDOM')
 				.setTitle(`這是${guild.name}的詳細資訊`)
@@ -142,7 +148,7 @@ module.exports = {
 					},
 				)
 				.setFooter('Copyright © Project CSJ', 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png');
-			interaction.reply({ embeds: [guildinfo], ephemeral: true });
+			interaction.reply({ embeds: [guildinfo], ephemeral: true }); // send feedback
 		}
 	},
 };

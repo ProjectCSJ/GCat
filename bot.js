@@ -1,62 +1,73 @@
+/* eslint-disable no-inline-comments */
 /* eslint-disable max-len */
 /* eslint-disable no-tabs */
+
+// Logger Settings
 const logger = require('node-color-log');
 logger.setLevel('info');
 logger.setDate(() => (new Date()).toLocaleString());
-// Setting Configuration
-const dotenv = require('dotenv');
-dotenv.config();
-const fs = require('fs');
 
-// Modules Import
+// Bot Configuration Setting
+const dotenv = require('dotenv'); // Import module .env
+dotenv.config(); // Import .env file for config
+
+// Import main module
 const { Client, Collection, Intents } = require('discord.js');
-
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-
 client.commands = new Collection();
 
-const commandFolders = fs.readdirSync('./commands');
+// Commands Setup
+const fs = require('fs'); // import module fs
+
+const commandFolders = fs.readdirSync('./commands'); // read all commands folders
 logger.info('⏳ Initialize modules...');
-for (const module of commandFolders) {
+
+for (const module of commandFolders) { // read category folders
 	logger.info(`✔️ Module ${module} has been load!`);
-	logger.info(`⏳ Loading commands in ${module}`);
-	const commandFiles = fs.readdirSync(`./commands/${module}`).filter((file) => file.endsWith('.js'));
-	for (const commandName of commandFiles) {
-		const command = require(`./commands/${module}/${commandName}`);
-		logger.info(`⏳ Loading command ${module}/${command.data.name}...`);
-		client.commands.set(command.data.name, command);
-		logger.info(`✔️ Command ${module}/${command.data.name} has been load!`);
+	logger.info(`⏳ Loading commands in ${module}...`);
+
+	const commandFiles = fs.readdirSync(`./commands/${module}`).filter((file) => file.endsWith('.js')); // definition what is command file
+
+	for (const commandName of commandFiles) { // read command files
+		const command = require(`./commands/${module}/${commandName}`); // call up command files
+		logger.info(`⏳ Loading command ${command.data.name} from ${module}...`);
+		client.commands.set(command.data.name, command); // link command to interaction
+		logger.info(`✔️ Command ${command.data.name} has been load!`);
 	}
 }
+
 logger.info('✔️ All of modules initialize complete!');
 logger.debug('🏳️ Language set Chinese');
 
-const eventFiles = fs.readdirSync('./events').filter((file) => file.endsWith('.js'));
+// Event setup
+const eventFiles = fs.readdirSync('./events').filter((file) => file.endsWith('.js')); // definition what is event file
 
-for (const file of eventFiles) {
+for (const file of eventFiles) { // read event file
 	const event = require(`./events/${file}`);
 	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
+		client.once(event.name, (...args) => event.execute(...args)); // only run once
 	}
 	else {
-		client.on(event.name, (...args) => event.execute(...args));
+		client.on(event.name, (...args) => event.execute(...args)); // run not only once
 	}
 }
 
+// Command handling
 client.on('interactionCreate', async (interaction) => {
-	if (!interaction.isCommand()) return;
+	if (!interaction.isCommand()) return; // Not command
 
 	const command = client.commands.get(interaction.commandName);
 
-	if (!command) return;
+	if (!command) return;// Not command
 
 	try {
-		await command.execute(interaction);
+		await command.execute(interaction); // try to execute command
 	}
 	catch (error) {
-		logger.warn(error);
-		await interaction.reply({ content: `**${interaction.commandName}**觸發失敗!`, ephemeral: true });
+		logger.warn(error); // log error info
+		await interaction.reply({ content: `**${interaction.commandName}**觸發失敗!`, ephemeral: true }); // send execute fail message to user
 	}
 });
 
+// Login
 client.login(process.env.TOKEN);
