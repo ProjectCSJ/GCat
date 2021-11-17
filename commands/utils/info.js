@@ -5,6 +5,7 @@
 // Call up api
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
+const logger = require('node-color-log');
 
 module.exports = {
 	// define commands
@@ -15,9 +16,13 @@ module.exports = {
 			subcommand
 				.setName('user')
 				.setDescription('Info about a user')
-				.addUserOption((option) => option.setName('target')
-					.setDescription('The user')
-					.setRequired(true)))
+				.addUserOption(
+					(option) =>
+						option.setName('target')
+							.setDescription('The user')
+							.setRequired(true)
+			)
+		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('server')
@@ -25,12 +30,20 @@ module.exports = {
 	defaultPermission: true, // defaule permission
 	async execute(interaction) {
 		if (interaction.options.getSubcommand() === 'user') { // when sub command is user
-			const user = interaction.options.getUser('target'); // setup target
+			if (interaction.options.getUser('target') === null || interaction.options.getUser === undefined) {
+				const user = interaction.user
+			} else {
+				const user = interaction.options.getUser('target'); // setup target
+			}
 			// embed builder
 			const userinfo = new MessageEmbed()
 				.setColor('RANDOM')
 				.setTitle(`這是${user.username}的詳細資訊`)
-				.setAuthor('G Cat Beta Version', 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png', 'https://csj.yeyunstudio.com')
+				.setAuthor(
+					'G Cat Beta Version',
+					'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+					'https://csj.yeyunstudio.com'
+				)
 				.setDescription('由Project CSJ使用Discord.js生成')
 				.setThumbnail(`${user.avatarURL({ dynamic: true })}`)
 				.addFields(
@@ -55,8 +68,14 @@ module.exports = {
 						inline: false,
 					},
 				)
-				.setFooter('Copyright © Project CSJ', 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png');
-			interaction.reply({ embeds: [userinfo], ephemeral: true }); // send feedback
+				.setFooter(
+					'Copyright © Project CSJ',
+					'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png'
+				);
+			interaction.reply({
+				embeds: [userinfo],
+				ephemeral: true
+			}); // send feedback
 		}
 		else { // when sub command is guild
 			const guild = interaction.guild; // setup target
@@ -65,7 +84,11 @@ module.exports = {
 			const guildinfo = new MessageEmbed()
 				.setColor('RANDOM')
 				.setTitle(`這是${guild.name}的詳細資訊`)
-				.setAuthor('G Cat Beta Version', 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png', 'https://csj.yeyunstudio.com')
+				.setAuthor(
+					'G Cat Beta Version',
+					'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+					'https://csj.yeyunstudio.com'
+				)
 				.setDescription('由Project CSJ使用Discord.js生成')
 				.setThumbnail(`${guild.iconURL({ dynamic: true })}`)
 				.addFields(
@@ -147,8 +170,14 @@ module.exports = {
 						inline: false,
 					},
 				)
-				.setFooter('Copyright © Project CSJ', 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png');
-			interaction.reply({ embeds: [guildinfo], ephemeral: true }); // send feedback
+				.setFooter(
+					'Copyright © Project CSJ',
+					'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png'
+				);
+			interaction.reply({
+				embeds: [guildinfo],
+				ephemeral: true
+			}); // send feedback
 		}
 	},
 };
