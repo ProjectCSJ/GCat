@@ -12,7 +12,7 @@ const dotenv = require('dotenv'); // Import module .env
 dotenv.config(); // Import .env file for config
 
 // Import main module
-const { Client, Collection, Intents } = require('discord.js');
+const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Collection();
 
@@ -65,7 +65,23 @@ client.on('interactionCreate', async (interaction) => {
 	}
 	catch (error) {
 		logger.warn(error); // log error info
-		await interaction.reply({ content: `**${interaction.commandName}**觸發失敗!`, ephemeral: true }); // send execute fail message to user
+		const error_reply = new MessageEmbed()
+			.setColor('RED')
+			.setAuthor(
+				'G Cat Beta Version',
+				'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+				'https://csj.yeyunstudio.com'
+			)
+			.setTitle('❌ Error')
+			.setDescription(`**${interaction.commandName}**觸發失敗!`)
+			.setFooter(
+				'Copyright © Project CSJ',
+				'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png'
+			);
+		await interaction.reply({
+			embeds: [error_reply],
+			ephemeral: true
+		}); // send execute fail message to user
 	}
 });
 
