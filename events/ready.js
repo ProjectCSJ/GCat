@@ -35,6 +35,14 @@ module.exports = {
 			DB.end(); // test complete, disconnect to db
 			logger.info(`✔️已自${DB_HOST}斷線!`);
 
+			client.user.setPresence({
+				activities: [{
+					name: 'Private Beta',
+					type: 'PLAYING'
+				}],
+				status: 'idle'
+			});
+
 			logger.info(`⏳正在嘗試以${client.user.tag}的身分登入...`); // login to user
 			logger.info('✔️已成功登入!');
 			logger.info(`使用者名稱:${client.user.tag}!`);
