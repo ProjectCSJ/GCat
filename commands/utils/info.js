@@ -39,9 +39,11 @@ module.exports = {
 				.setColor('RANDOM')
 				.setTitle(`這是${user.username}的詳細資訊`)
 				.setAuthor(
-					'G Cat Beta Version',
-					'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
-					'https://csj.yeyunstudio.com',
+					{
+						name: 'G Cat Beta Version',
+						url: 'https://csj.yeyunstudio.com',
+						iconURL: 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+					},
 				)
 				.setDescription('由Project CSJ使用Discord.js生成')
 				.setThumbnail(`${user.avatarURL({ dynamic: true })}`)
@@ -68,8 +70,10 @@ module.exports = {
 					},
 				)
 				.setFooter(
-					'Copyright © Project CSJ',
-					'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+					{
+						name: 'Copyright © Project CSJ',
+						iconURL: 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+					},
 				);
 			interaction.reply({
 				embeds: [userinfo],
@@ -84,9 +88,11 @@ module.exports = {
 				.setColor('RANDOM')
 				.setTitle(`這是${guild.name}的詳細資訊`)
 				.setAuthor(
-					'G Cat Beta Version',
-					'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
-					'https://csj.yeyunstudio.com',
+					{
+						name: 'G Cat Beta Version',
+						url: 'https://csj.yeyunstudio.com',
+						iconURL: 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+					},
 				)
 				.setDescription('由Project CSJ使用Discord.js生成')
 				.setThumbnail(`${guild.iconURL({ dynamic: true })}`)
@@ -170,8 +176,10 @@ module.exports = {
 					},
 				)
 				.setFooter(
-					'Copyright © Project CSJ',
-					'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+					{
+						name: 'Copyright © Project CSJ',
+						iconURL: 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+					},
 				);
 			interaction.reply({
 				embeds: [guildinfo],
