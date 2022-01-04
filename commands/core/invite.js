@@ -21,16 +21,16 @@ module.exports = {
 				{
 					name: 'Sorry... It\'s a private bot',
 					value: 'But you can try to ask [him](https://discord.com/users/826327097945489408) for invite link',
-					inline: true
+					inline: true,
 				},
 			)
 			.setFooter(
 				'Copyright © Project CSJ',
-				'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png'
+				'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
 			);
 		interaction.reply({
 			embeds: [ping],
-			ephemeral: true
+			ephemeral: true,
 		}); // send feedback
 	},
 };

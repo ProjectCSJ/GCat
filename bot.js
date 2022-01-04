@@ -65,22 +65,26 @@ client.on('interactionCreate', async (interaction) => {
 	}
 	catch (error) {
 		logger.warn(error); // log error info
-		const error_reply = new MessageEmbed()
+		const ErrorReply = new MessageEmbed()
 			.setColor('RED')
 			.setAuthor(
-				'G Cat Beta Version',
-				'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
-				'https://csj.yeyunstudio.com'
+				{
+					name: 'G Cat Beta Version',
+					url: 'https://csj.yeyunstudio.com',
+					iconURL: 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+				},
 			)
 			.setTitle('❌ Error')
 			.setDescription(`**${interaction.commandName}**觸發失敗!`)
 			.setFooter(
-				'Copyright © Project CSJ',
-				'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png'
+				{
+					name: 'Copyright © Project CSJ',
+					iconURL: 'https://cdn.discordapp.com/avatars/882519953100656680/dd87a83415c4f4b77ade768d34e694f4.png',
+				},
 			);
 		await interaction.reply({
-			embeds: [error_reply],
-			ephemeral: true
+			embeds: [ErrorReply],
+			ephemeral: true,
 		}); // send execute fail message to user
 	}
 });

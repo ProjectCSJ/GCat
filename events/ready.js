@@ -38,9 +38,9 @@ module.exports = {
 			client.user.setPresence({
 				activities: [{
 					name: 'Private Beta',
-					type: 'PLAYING'
+					type: 'PLAYING',
 				}],
-				status: 'idle'
+				status: 'idle',
 			});
 
 			logger.info(`⏳正在嘗試以${client.user.tag}的身分登入...`); // login to user
